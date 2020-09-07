@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace SortingVisualization
@@ -7,20 +8,26 @@ namespace SortingVisualization
     {
         [Header("References")]
         [SerializeField] private Transform[] stackTransforms = new Transform[stackCount];
-        [SerializeField] private int[] stackNumbers = new int[stackCount];
+        [SerializeField] private int[] stacks = new int[stackCount];
 
         public bool sorting {get; private set;}
 
+        private Algorithm algorithm;
+
+        private Coroutine sortCoroutine;
+
         private const int stackCount = 64;
+
+        private const float stepDelay = 0.5f;
 
         public void TriggerSorting()
         {
             if (sorting) PauseSort(); else StartSort();
         }
 
-        public void SetAlgorithm(Algorithm algorithm)
+        public void SetAlgorithm(Algorithm _algorithm)
         {
-            
+            algorithm = _algorithm;
         }
 
         public void ResetStacks()
@@ -42,10 +49,13 @@ namespace SortingVisualization
         private void StartSort()
         {
             sorting = true;
+            if (sortCoroutine != null) StopCoroutine(sortCoroutine);
+            sortCoroutine = StartCoroutine(Sort());
         }
 
         private void PauseSort()
         {
+            if (sortCoroutine != null) StopCoroutine(sortCoroutine);
             sorting = false;
         }
 
@@ -71,9 +81,33 @@ namespace SortingVisualization
         {
             for (int i = 0; i < stackCount; i++)
             {
-                if (stackNumbers[i] != i) return false;
+                if (stacks[i] != i) return false;
             }
             return true;
+        }
+
+        private IEnumerator Sort()
+        {
+            while (!StacksSorted())
+            {
+                yield return new WaitForSeconds(stepDelay);
+                switch (algorithm)
+                {
+                    case Algorithm.SelectionSort:
+                    {
+                        int[] nextSet = SelectionSort.GetNextStackSet(stacks);
+                        SetStack(nextSet[0], nextSet[1]);
+                        break;
+                    }
+                    case Algorithm.InsertionSort:
+                    {
+                        int[] nextSet = InsertionSort.GetNextStackSet(stacks);
+                        SetStack(nextSet[0], nextSet[1]);
+                        break;
+                    }
+                }
+            }
+            sorting = false;
         }
     }
 }
