@@ -22,6 +22,13 @@ namespace SortingVisualization
 
         private const float sortDelay = 4 / (float)64;
 
+        private Vector3 pointerPosition;
+
+        private void Start()
+        {
+            pointerPosition = pointerTransform.position;
+        }
+
         public void TriggerSorting()
         {
             if (sorting) StopSort(); else StartSort();
@@ -34,18 +41,24 @@ namespace SortingVisualization
 
         public void ResetStacks()
         {
+            StopSort();
             for (int i = 0; i < stackCount; i++) SetStack(i, i);
+            pointerTransform.position = pointerPosition;
         }
 
         public void RandomizeStacks()
         {
+            StopSort();
             int[] randomIndices = GetRandomIndices(stackCount);
             for (int i = 0; i < stackCount; i++) SetStack(randomIndices[i], i);
+            pointerTransform.position = pointerPosition;
         }
 
         public void WorstCaseStacks()
         {
+            StopSort();
             for (int i = 0; i < stackCount; i++) SetStack((stackCount - 1) - i, i);
+            pointerTransform.position = pointerPosition;
         }
 
         private void StartSort()
@@ -58,8 +71,9 @@ namespace SortingVisualization
                 case Algorithm.SelectionSort:
                     sortCoroutine = StartCoroutine(SelectionSort());
                     break;
-                // case Algorithm.InsertionSort:
-                //     sortCoroutine = StartCoroutine(InsertionSort());
+                case Algorithm.InsertionSort:
+                    sortCoroutine = StartCoroutine(InsertionSort());
+                    break;
             }
         }
 
@@ -74,7 +88,7 @@ namespace SortingVisualization
             for (int i = Array.IndexOf(stacks, stack); i > index; i--) stacks[i] = stacks[i - 1];
             stacks[index] = stack;
             stackTransforms[stack].SetSiblingIndex(index);
-            pointerTransform.position = new Vector3(stackTransforms[stack].position.x, pointerTransform.position.y, 0);
+            pointerTransform.position = new Vector3(stackTransforms[stack].position.x, pointerPosition.y, pointerPosition.z);
         }
 
         private int[] GetRandomIndices(int size)
@@ -110,6 +124,22 @@ namespace SortingVisualization
                     if (stacks[j] < smallest) smallest = stacks[j];
                 }
                 SetStack(smallest, i);
+            }
+            sorting = false;
+        }
+
+        private IEnumerator InsertionSort()
+        {
+            for (int i = 0; i < stackCount; i++)
+            {
+                yield return new WaitForSeconds(sortDelay);
+                int index = i;
+                for (int j = i; j > 0; j--)
+                {
+                    if (stacks[j - 1] < stacks[i]) break;
+                    index--;
+                }
+                SetStack(stacks[i], index);
             }
             sorting = false;
         }
