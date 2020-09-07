@@ -11,18 +11,25 @@ namespace SortingVisualization
 
         private const int stackCount = 64;
 
-        private void Update()
+        public void ResetStacks()
         {
-            if (Input.GetKeyDown("space")) RandomizeStacks();
+            for (int i = 0; i < stackCount; i++) SetStack(i, i);
         }
 
-        private void RandomizeStacks()
+        public void RandomizeStacks()
         {
             int[] randomIndices = GetRandomIndices(stackCount);
-            for (int i = 0; i < stackCount; i++)
-            {
-                stackTransforms[randomIndices[i]].SetSiblingIndex(i);
-            }
+            for (int i = 0; i < stackCount; i++) SetStack(randomIndices[i], i);
+        }
+
+        public void WorstCaseStacks()
+        {
+            for (int i = 0; i < stackCount; i++) SetStack((stackCount - 1) - i, i);
+        }
+
+        private void SetStack(int stack, int index)
+        {
+            stackTransforms[stack].SetSiblingIndex(index);
         }
 
         private int[] GetRandomIndices(int size)
