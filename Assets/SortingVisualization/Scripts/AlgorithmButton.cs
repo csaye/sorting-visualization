@@ -6,7 +6,8 @@ namespace SortingVisualization
     public enum Algorithm
     {
         SelectionSort,
-        InsertionSort
+        InsertionSort,
+        BubbleSort
     }
     
     [RequireComponent(typeof(Button), typeof(Image))]

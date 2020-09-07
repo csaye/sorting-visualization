@@ -74,6 +74,9 @@ namespace SortingVisualization
                 case Algorithm.InsertionSort:
                     sortCoroutine = StartCoroutine(InsertionSort());
                     break;
+                case Algorithm.BubbleSort:
+                    sortCoroutine = StartCoroutine(BubbleSort());
+                    break;
             }
         }
 
@@ -140,6 +143,22 @@ namespace SortingVisualization
                     index--;
                 }
                 SetStack(stacks[i], index);
+            }
+            sorting = false;
+        }
+
+        private IEnumerator BubbleSort()
+        {
+            while (!StacksSorted())
+            {
+                for (int i = 1; i < stackCount; i++)
+                {
+                    if (stacks[i] < stacks[i - 1])
+                    {
+                        yield return new WaitForSeconds(sortDelay);
+                        SetStack(stacks[i], i - 1);
+                    }
+                }
             }
             sorting = false;
         }
