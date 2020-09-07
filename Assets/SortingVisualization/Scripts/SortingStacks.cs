@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace SortingVisualization
 
         private const int stackCount = 64;
 
-        private const float stepDelay = 0.5f;
+        private const float sortDelay = 0.5f;
 
         public void TriggerSorting()
         {
@@ -48,9 +49,17 @@ namespace SortingVisualization
 
         private void StartSort()
         {
+            if (StacksSorted()) return;
             sorting = true;
             if (sortCoroutine != null) StopCoroutine(sortCoroutine);
-            sortCoroutine = StartCoroutine(Sort());
+            switch (algorithm)
+            {
+                case Algorithm.SelectionSort:
+                    sortCoroutine = StartCoroutine(SelectionSort());
+                    break;
+                // case Algorithm.InsertionSort:
+                //     sortCoroutine = StartCoroutine(InsertionSort());
+            }
         }
 
         private void PauseSort()
@@ -61,6 +70,8 @@ namespace SortingVisualization
 
         private void SetStack(int stack, int index)
         {
+            for (int i = Array.IndexOf(stacks, stack); i > index; i--) stacks[i] = stacks[i - 1];
+            stacks[index] = stack;
             stackTransforms[stack].SetSiblingIndex(index);
         }
 
@@ -70,8 +81,8 @@ namespace SortingVisualization
             for (int i = 0; i < size; i++) randomIndices[i] = -1;
             for (int i = 0; i < size; i++)
             {
-                int randomIndex = Random.Range(0, size);
-                while (randomIndices.Contains(randomIndex)) randomIndex = Random.Range(0, size);
+                int randomIndex = UnityEngine.Random.Range(0, size);
+                while (randomIndices.Contains(randomIndex)) randomIndex = UnityEngine.Random.Range(0, size);
                 randomIndices[i] = randomIndex;
             }
             return randomIndices;
@@ -86,25 +97,15 @@ namespace SortingVisualization
             return true;
         }
 
-        private IEnumerator Sort()
+        private IEnumerator SelectionSort()
         {
-            while (!StacksSorted())
+            for (int i = 0; i < stackCount; i++)
             {
-                yield return new WaitForSeconds(stepDelay);
-                switch (algorithm)
+                yield return new WaitForSeconds(sortDelay);
+                // int smallest;
+                for (int j = i; j < stackCount; j++)
                 {
-                    case Algorithm.SelectionSort:
-                    {
-                        int[] nextSet = SelectionSort.GetNextStackSet(stacks);
-                        SetStack(nextSet[0], nextSet[1]);
-                        break;
-                    }
-                    case Algorithm.InsertionSort:
-                    {
-                        int[] nextSet = InsertionSort.GetNextStackSet(stacks);
-                        SetStack(nextSet[0], nextSet[1]);
-                        break;
-                    }
+
                 }
             }
             sorting = false;
