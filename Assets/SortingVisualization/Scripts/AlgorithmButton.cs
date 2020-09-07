@@ -7,7 +7,8 @@ namespace SortingVisualization
     {
         SelectionSort,
         InsertionSort,
-        BubbleSort
+        BubbleSort,
+        QuickSort
     }
     
     [RequireComponent(typeof(Button), typeof(Image))]

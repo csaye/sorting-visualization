@@ -9,7 +9,7 @@ namespace SortingVisualization
     {
         [Header("References")]
         [SerializeField] private Transform[] stackTransforms = new Transform[stackCount];
-        [SerializeField] private int[] stacks = new int[stackCount];
+        [SerializeField] public int[] stacks = new int[stackCount];
         [SerializeField] private Transform pointerTransform = null;
 
         public bool sorting {get; private set;}
@@ -18,9 +18,9 @@ namespace SortingVisualization
 
         private Coroutine sortCoroutine;
 
-        private const int stackCount = 64;
+        public const int stackCount = 64;
 
-        private const float sortDelay = 4 / (float)64;
+        public const float sortDelay = 4 / (float)64;
 
         private Vector3 pointerPosition;
 
@@ -69,7 +69,7 @@ namespace SortingVisualization
             switch (algorithm)
             {
                 case Algorithm.SelectionSort:
-                    sortCoroutine = StartCoroutine(SelectionSort());
+                    sortCoroutine = StartCoroutine(SelectionSort.Sort(this));
                     break;
                 case Algorithm.InsertionSort:
                     sortCoroutine = StartCoroutine(InsertionSort());
@@ -77,16 +77,19 @@ namespace SortingVisualization
                 case Algorithm.BubbleSort:
                     sortCoroutine = StartCoroutine(BubbleSort());
                     break;
+                case Algorithm.QuickSort:
+                    sortCoroutine = StartCoroutine(QuickSort());
+                    break;
             }
         }
 
-        private void StopSort()
+        public void StopSort()
         {
             if (sortCoroutine != null) StopCoroutine(sortCoroutine);
             sorting = false;
         }
 
-        private void SetStack(int stack, int index)
+        public void SetStack(int stack, int index)
         {
             if (index < Array.IndexOf(stacks, stack))
             {
@@ -124,20 +127,20 @@ namespace SortingVisualization
             return true;
         }
 
-        private IEnumerator SelectionSort()
-        {
-            for (int i = 0; i < stackCount; i++)
-            {
-                yield return new WaitForSeconds(sortDelay);
-                int smallest = stackCount;
-                for (int j = i; j < stackCount; j++)
-                {
-                    if (stacks[j] < smallest) smallest = stacks[j];
-                }
-                SetStack(smallest, i);
-            }
-            sorting = false;
-        }
+        // private IEnumerator SelectionSort()
+        // {
+        //     for (int i = 0; i < stackCount; i++)
+        //     {
+        //         yield return new WaitForSeconds(sortDelay);
+        //         int smallest = stackCount;
+        //         for (int j = i; j < stackCount; j++)
+        //         {
+        //             if (stacks[j] < smallest) smallest = stacks[j];
+        //         }
+        //         SetStack(smallest, i);
+        //     }
+        //     sorting = false;
+        // }
 
         private IEnumerator InsertionSort()
         {
@@ -170,5 +173,17 @@ namespace SortingVisualization
             }
             sorting = false;
         }
+
+        private IEnumerator QuickSort()
+        {
+            // int pivot = GetPivot(stacks, 0, stackCount);
+            yield return null;
+            sorting = false;
+        }
+
+        // private void GetPivot()
+        // {
+
+        // }
     }
 }
