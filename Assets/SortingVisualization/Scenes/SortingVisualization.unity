@@ -2086,6 +2086,8 @@ MonoBehaviour:
   algorithmButtons:
   - {fileID: 515396712}
   - {fileID: 1128760479}
+  - {fileID: 1089663804}
+  - {fileID: 954722238}
 --- !u!1 &609858040
 GameObject:
   m_ObjectHideFlags: 0
