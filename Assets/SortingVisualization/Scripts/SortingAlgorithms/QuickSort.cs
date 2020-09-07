@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 namespace SortingVisualization
 {
@@ -9,14 +11,18 @@ namespace SortingVisualization
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
             sortingStacks = _sortingStacks;
-            // int pivot = GetPivot(stacks, 0, stackCount);
+            int pivot = GetPivotStack(sortingStacks.stacks, 0, SortingStacks.stackCount);
+            sortingStacks.SetStack(pivot, SortingStacks.stackCount / 2);
             yield return null;
             sortingStacks.StopSort();
         }
 
-        // private void GetPivot()
-        // {
-
-        // }
+        private static int GetPivotStack(int[] stacks, int startIndex, int endIndex)
+        {
+            int[] sortedStacks = new int[endIndex - startIndex];
+            for (int i = startIndex; i < endIndex; i++) sortedStacks[i] = stacks[i];
+            Array.Sort(sortedStacks);
+            return sortedStacks[sortedStacks.Length / 2];
+        }
     }
 }

@@ -3038,7 +3038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e33bb82ac7924aeb911b70c25028d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  algorithm: 2
+  algorithm: 3
   sortingStacks: {fileID: 1515629291}
   algorithmButtonBar: {fileID: 576661652}
 --- !u!114 &954722239
