@@ -72,13 +72,13 @@ namespace SortingVisualization
                     sortCoroutine = StartCoroutine(SelectionSort.Sort(this));
                     break;
                 case Algorithm.InsertionSort:
-                    sortCoroutine = StartCoroutine(InsertionSort());
+                    sortCoroutine = StartCoroutine(InsertionSort.Sort(this));
                     break;
                 case Algorithm.BubbleSort:
-                    sortCoroutine = StartCoroutine(BubbleSort());
+                    sortCoroutine = StartCoroutine(BubbleSort.Sort(this));
                     break;
                 case Algorithm.QuickSort:
-                    sortCoroutine = StartCoroutine(QuickSort());
+                    sortCoroutine = StartCoroutine(QuickSort.Sort(this));
                     break;
             }
         }
@@ -118,7 +118,7 @@ namespace SortingVisualization
             return randomIndices;
         }
 
-        private bool StacksSorted()
+        public bool StacksSorted()
         {
             for (int i = 0; i < stackCount; i++)
             {
@@ -126,64 +126,5 @@ namespace SortingVisualization
             }
             return true;
         }
-
-        // private IEnumerator SelectionSort()
-        // {
-        //     for (int i = 0; i < stackCount; i++)
-        //     {
-        //         yield return new WaitForSeconds(sortDelay);
-        //         int smallest = stackCount;
-        //         for (int j = i; j < stackCount; j++)
-        //         {
-        //             if (stacks[j] < smallest) smallest = stacks[j];
-        //         }
-        //         SetStack(smallest, i);
-        //     }
-        //     sorting = false;
-        // }
-
-        private IEnumerator InsertionSort()
-        {
-            for (int i = 0; i < stackCount; i++)
-            {
-                yield return new WaitForSeconds(sortDelay);
-                int index = i;
-                for (int j = i; j > 0; j--)
-                {
-                    if (stacks[j - 1] < stacks[i]) break;
-                    index--;
-                }
-                SetStack(stacks[i], index);
-            }
-            sorting = false;
-        }
-
-        private IEnumerator BubbleSort()
-        {
-            while (!StacksSorted())
-            {
-                for (int i = 1; i < stackCount; i++)
-                {
-                    if (stacks[i] < stacks[i - 1])
-                    {
-                        yield return new WaitForSeconds(sortDelay);
-                        SetStack(stacks[i], i - 1);
-                    }
-                }
-            }
-            sorting = false;
-        }
-
-        private IEnumerator QuickSort()
-        {
-            // int pivot = GetPivot(stacks, 0, stackCount);
-            yield return null;
-            sorting = false;
-        }
-
-        // private void GetPivot()
-        // {
-
-        // }
     }
 }
