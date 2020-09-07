@@ -88,8 +88,16 @@ namespace SortingVisualization
 
         private void SetStack(int stack, int index)
         {
-            for (int i = Array.IndexOf(stacks, stack); i > index; i--) stacks[i] = stacks[i - 1];
-            stacks[index] = stack;
+            if (index < Array.IndexOf(stacks, stack))
+            {
+                for (int i = Array.IndexOf(stacks, stack); i > index; i--) stacks[i] = stacks[i - 1];
+                stacks[index] = stack;
+            }
+            else
+            {
+                for (int i = Array.IndexOf(stacks, stack); i < index; i++) stacks[i] = stacks[i + 1];
+                stacks[index] = stack;
+            }
             stackTransforms[stack].SetSiblingIndex(index);
             pointerTransform.position = new Vector3(stackTransforms[stack].position.x, pointerPosition.y, pointerPosition.z);
         }
