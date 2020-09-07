@@ -105,6 +105,34 @@ namespace SortingVisualization
             pointerTransform.position = new Vector3(stackTransforms[stack].position.x, pointerPosition.y, pointerPosition.z);
         }
 
+        public void SwapStackIndices(int indexA, int indexB)
+        {
+            int temp = stacks[indexA];
+            stacks[indexA] = stacks[indexB];
+            stacks[indexB] = temp;
+            Transform updatedTransform;
+            if (indexA < indexB)
+            {
+                transform.GetChild(indexA).SetSiblingIndex(indexB);
+                transform.GetChild(indexB - 1).SetSiblingIndex(indexA);
+                updatedTransform = transform.GetChild(indexA);
+            }
+            else
+            {
+                transform.GetChild(indexB).SetSiblingIndex(indexA);
+                transform.GetChild(indexA - 1).SetSiblingIndex(indexB);
+                updatedTransform = transform.GetChild(indexB);
+            }
+            pointerTransform.position = new Vector3(updatedTransform.position.x, pointerPosition.y, pointerPosition.z);
+        }
+
+        private IEnumerator SwapIndices(int indexA, int indexB)
+        {
+            transform.GetChild(indexA).SetSiblingIndex(indexB);
+            yield return new WaitForSeconds(0.1f);
+            transform.GetChild(indexB - 1).SetSiblingIndex(indexA);
+        }
+
         private int[] GetRandomIndices(int size)
         {
             int[] randomIndices = new int[size];
