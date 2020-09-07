@@ -10,6 +10,7 @@ namespace SortingVisualization
         [Header("References")]
         [SerializeField] private Transform[] stackTransforms = new Transform[stackCount];
         [SerializeField] private int[] stacks = new int[stackCount];
+        [SerializeField] private Transform pointerTransform = null;
 
         public bool sorting {get; private set;}
 
@@ -19,11 +20,11 @@ namespace SortingVisualization
 
         private const int stackCount = 64;
 
-        private const float sortDelay = 0.5f;
+        private const float sortDelay = 4 / (float)64;
 
         public void TriggerSorting()
         {
-            if (sorting) PauseSort(); else StartSort();
+            if (sorting) StopSort(); else StartSort();
         }
 
         public void SetAlgorithm(Algorithm _algorithm)
@@ -62,7 +63,7 @@ namespace SortingVisualization
             }
         }
 
-        private void PauseSort()
+        private void StopSort()
         {
             if (sortCoroutine != null) StopCoroutine(sortCoroutine);
             sorting = false;
@@ -73,6 +74,7 @@ namespace SortingVisualization
             for (int i = Array.IndexOf(stacks, stack); i > index; i--) stacks[i] = stacks[i - 1];
             stacks[index] = stack;
             stackTransforms[stack].SetSiblingIndex(index);
+            pointerTransform.position = new Vector3(stackTransforms[stack].position.x, pointerTransform.position.y, 0);
         }
 
         private int[] GetRandomIndices(int size)
@@ -102,11 +104,12 @@ namespace SortingVisualization
             for (int i = 0; i < stackCount; i++)
             {
                 yield return new WaitForSeconds(sortDelay);
-                // int smallest;
+                int smallest = stackCount;
                 for (int j = i; j < stackCount; j++)
                 {
-
+                    if (stacks[j] < smallest) smallest = stacks[j];
                 }
+                SetStack(smallest, i);
             }
             sorting = false;
         }

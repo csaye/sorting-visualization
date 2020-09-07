@@ -3,20 +3,20 @@ using UnityEngine;
 
 namespace SortingVisualization
 {
-    public class StartPauseButton : MonoBehaviour
+    public class StartStopButton : MonoBehaviour
     {
         [Header("References")]
         [SerializeField] private TextMeshProUGUI textField = null;
         [SerializeField] private SortingStacks sortingStacks = null;
 
-        public void OnClick()
+        public void TriggerSorting()
         {
             sortingStacks.TriggerSorting();
         }
 
         private void Update()
         {
-            textField.text = sortingStacks.sorting ? "Pause" : "Start";
+            textField.text = sortingStacks.sorting ? "Stop" : "Start";
         }
     }
 }
