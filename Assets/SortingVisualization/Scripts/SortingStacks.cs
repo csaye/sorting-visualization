@@ -9,7 +9,19 @@ namespace SortingVisualization
         [SerializeField] private Transform[] stackTransforms = new Transform[stackCount];
         [SerializeField] private int[] stackNumbers = new int[stackCount];
 
+        public bool sorting {get; private set;}
+
         private const int stackCount = 64;
+
+        public void TriggerSorting()
+        {
+            if (sorting) PauseSort(); else StartSort();
+        }
+
+        public void SetAlgorithm(Algorithm algorithm)
+        {
+            
+        }
 
         public void ResetStacks()
         {
@@ -25,6 +37,16 @@ namespace SortingVisualization
         public void WorstCaseStacks()
         {
             for (int i = 0; i < stackCount; i++) SetStack((stackCount - 1) - i, i);
+        }
+
+        private void StartSort()
+        {
+            sorting = true;
+        }
+
+        private void PauseSort()
+        {
+            sorting = false;
         }
 
         private void SetStack(int stack, int index)
