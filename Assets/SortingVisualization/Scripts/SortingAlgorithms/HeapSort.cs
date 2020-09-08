@@ -24,8 +24,23 @@ namespace SortingVisualization
         {
             sortingStacks = _sortingStacks;
             heap = GetInitialHeap();
+            LogHeap();
             yield return null;
             sortingStacks.StopSort();
+        }
+
+        private static void LogHeap()
+        {
+            foreach (Node n in heap)
+            {
+                if (n == null) { Debug.Log("null node"); continue;}
+                Debug.Log(n.stack);
+                if (n.childA == null) Debug.Log("null child a");
+                    else Debug.Log(n.childA.stack);
+                if (n.childB == null) Debug.Log("null child b");
+                    else Debug.Log(n.childB.stack);
+                Debug.Log("--------------------------------------------------");
+            }
         }
 
         private static Node[] GetInitialHeap()
@@ -34,22 +49,22 @@ namespace SortingVisualization
             for (int i = 0; i < stackCount; i++)
             {
                 int stackToAdd = sortingStacks.stacks[i];
-                Node nodetoAdd = new Node(stackToAdd);
+                Node nodeToAdd = new Node(stackToAdd);
                 for (int j = 0; j < stackCount; j++)
                 {
                     if (initialHeap[j] == null)
                     {
-                        initialHeap[j] = nodetoAdd;
+                        initialHeap[j] = nodeToAdd;
                         break;
                     }
                     if (initialHeap[j].childA == null)
                     {
-                        initialHeap[j].childA = nodetoAdd;
-                        for (int k = j; k < stackToAdd; k++)
+                        initialHeap[j].childA = nodeToAdd;
+                        for (int k = j; k < stackCount; k++)
                         {
                             if (initialHeap[k] == null)
                             {
-                                initialHeap[k] = nodetoAdd;
+                                initialHeap[k] = nodeToAdd;
                                 break;
                             }
                         }
@@ -57,12 +72,12 @@ namespace SortingVisualization
                     }
                     if (initialHeap[j].childB == null)
                     {
-                        initialHeap[j].childB = nodetoAdd;
-                        for (int k = j; k < stackToAdd; k++)
+                        initialHeap[j].childB = nodeToAdd;
+                        for (int k = j; k < stackCount; k++)
                         {
                             if (initialHeap[k] == null)
                             {
-                                initialHeap[k] = nodetoAdd;
+                                initialHeap[k] = nodeToAdd;
                                 break;
                             }
                         }
