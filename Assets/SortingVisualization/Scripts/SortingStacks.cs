@@ -80,6 +80,18 @@ namespace SortingVisualization
                 case Algorithm.QuickSort:
                     sortCoroutine = StartCoroutine(QuickSort.Sort(this));
                     break;
+                case Algorithm.MergeSort:
+                    sortCoroutine = StartCoroutine(MergeSort.Sort(this));
+                    break;
+                case Algorithm.HeapSort:
+                    sortCoroutine = StartCoroutine(HeapSort.Sort(this));
+                    break;
+                case Algorithm.RadixSort:
+                    sortCoroutine = StartCoroutine(RadixSort.Sort(this));
+                    break;
+                case Algorithm.ShellSort:
+                    sortCoroutine = StartCoroutine(ShellSort.Sort(this));
+                    break;
             }
         }
 

@@ -8,7 +8,11 @@ namespace SortingVisualization
         SelectionSort,
         InsertionSort,
         BubbleSort,
-        QuickSort
+        QuickSort,
+        MergeSort,
+        HeapSort,
+        RadixSort,
+        ShellSort
     }
     
     [RequireComponent(typeof(Button), typeof(Image))]

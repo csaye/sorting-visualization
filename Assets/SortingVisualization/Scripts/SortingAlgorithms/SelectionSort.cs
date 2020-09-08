@@ -7,14 +7,17 @@ namespace SortingVisualization
     {
         private static SortingStacks sortingStacks;
 
+        private static int stackCount = SortingStacks.stackCount;
+        private static float sortDelay = SortingStacks.sortDelay;
+
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
             sortingStacks = _sortingStacks;
-            for (int i = 0; i < SortingStacks.stackCount; i++)
+            for (int i = 0; i < stackCount; i++)
             {
-                yield return new WaitForSeconds(SortingStacks.sortDelay);
-                int smallest = SortingStacks.stackCount;
-                for (int j = i; j < SortingStacks.stackCount; j++)
+                yield return new WaitForSeconds(sortDelay);
+                int smallest = stackCount;
+                for (int j = i; j < stackCount; j++)
                 {
                     if (sortingStacks.stacks[j] < smallest) smallest = sortingStacks.stacks[j];
                 }
