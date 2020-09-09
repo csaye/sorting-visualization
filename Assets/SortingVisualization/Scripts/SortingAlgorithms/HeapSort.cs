@@ -25,56 +25,60 @@ namespace SortingVisualization
         {
             sortingStacks = _sortingStacks;
             InitializeHeap();
-            Debug.Log(heap[0].stack);
-            // while (heap.Count > 0)
-            // {
-                bool sortingHeap = true;
-                while (sortingHeap)
+            // LogHeap();
+            while (heap[0].stack != 63)
+            {
+                Debug.Log(heap[0]);
+                bool nodeSwapped = false;
+                for (int i = 0; i < heap.Count; i++)
                 {
-                    bool noSwaps = true;
-                    for (int i = 0; i < heap.Count; i++)
+                    if (heap[i].childA != null && heap[i].stack < heap[i].childA.stack)
                     {
-                        // Debug.Log(i);
-                        Node currentNode = heap[i];
-                        if (currentNode.childA != null && currentNode.stack < currentNode.childA.stack)
-                        {
-                            Debug.Log(currentNode.stack + " is less than " + currentNode.childA.stack);
-                            noSwaps = false;
-                            HeapSwap(currentNode, currentNode.childA);
-                            yield return new WaitForSeconds(sortDelay);
-                            continue;
-                        }
-                        if (currentNode.childB != null && currentNode.stack < currentNode.childB.stack)
-                        {
-                            Debug.Log(currentNode.stack + " is less than " + currentNode.childB.stack);
-                            noSwaps = false;
-                            HeapSwap(currentNode, currentNode.childB);
-                            yield return new WaitForSeconds(sortDelay);
-                            continue;
-                        }
+                        nodeSwapped = true;
+                        HeapSwap(heap[i], heap[i].childA);
+                        yield return new WaitForSeconds(sortDelay);
                     }
-                    if (noSwaps) sortingHeap = false;
+                    if (heap[i].childB != null && heap[i].stack < heap[i].childB.stack)
+                    {
+                        nodeSwapped = true;
+                        HeapSwap(heap[i], heap[i].childB);
+                        yield return new WaitForSeconds(sortDelay);
+                    }
                 }
-                // get largest node and swap with last
-                // heap[0].stack;
-                // heap[0] = heap[heap.Count - 1];
-                // heap.Remove(heap.Count - 1);
-            // }
-            Debug.Log(heap[0].stack);
+                if (!nodeSwapped) break;
+            }
+            // Debug.Log("done, node 63 at " + heap.FindIndex(node => node.stack == 63));
+            yield return null;
             sortingStacks.StopSort();
+        }
+
+        private static void LogHeap()
+        {
+            foreach (Node n in heap)
+            {
+                Debug.Log(n.stack);
+                if (n.childA != null) Debug.Log(n.childA.stack);
+                if (n.childB != null) Debug.Log(n.childB.stack);
+                Debug.Log("----------------------");
+            }
         }
 
         private static void HeapSwap(Node nodeA, Node nodeB)
         {
+            Debug.Log("swapping " + nodeA.stack + " and " + nodeB.stack);
             sortingStacks.SwapStacks(nodeA.stack, nodeB.stack);
             int heapIndexA = heap.IndexOf(nodeA);
             int heapIndexB = heap.IndexOf(nodeB);
             heap[heapIndexA].stack = nodeB.stack;
             heap[heapIndexB].stack = nodeA.stack;
+            Node temp = heap[heapIndexA];
+            heap[heapIndexA] = heap[heapIndexB];
+            heap[heapIndexB] = temp;
         }
 
         private static void InitializeHeap()
         {
+            heap = new List<Node>();
             for (int i = 0; i < stackCount; i++)
             {
                 int stackToAdd = sortingStacks.stacks[i];
