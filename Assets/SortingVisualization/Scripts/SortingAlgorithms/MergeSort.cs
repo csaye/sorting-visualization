@@ -13,13 +13,14 @@ namespace SortingVisualization
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
             sortingStacks = _sortingStacks;
+            int[] stacks = sortingStacks.stacks;
             int groupCount = 0;
             int groupSize = 2;
             for (int i = 0; i < stackCount; i += groupSize)
             {
                 groupCount++;
                 if (i + (groupSize / 2) >= stackCount) break;
-                if (sortingStacks.stacks[i] > sortingStacks.stacks[i + 1])
+                if (stacks[i] > stacks[i + 1])
                 {
                     sortingStacks.SwapStackIndices(i, i + 1);
                     yield return new WaitForSeconds(sortDelay);
@@ -36,9 +37,9 @@ namespace SortingVisualization
                         int smallest = stackCount;
                         for (int k = j; k < i + groupSize; k++)
                         {
-                            if (sortingStacks.stacks[k] < smallest) smallest = sortingStacks.stacks[k];
+                            if (stacks[k] < smallest) smallest = stacks[k];
                         }
-                        if (sortingStacks.stacks[j] != smallest)
+                        if (stacks[j] != smallest)
                         {
                             sortingStacks.SetStack(smallest, j);
                             yield return new WaitForSeconds(sortDelay);
