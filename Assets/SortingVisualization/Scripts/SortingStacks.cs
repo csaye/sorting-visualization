@@ -138,6 +138,13 @@ namespace SortingVisualization
             pointerTransform.position = new Vector3(updatedTransform.position.x, pointerPosition.y, pointerPosition.z);
         }
 
+        public void SwapStacks(int stackA, int stackB)
+        {
+            int indexA = Array.IndexOf(stacks, stackA);
+            int indexB = Array.IndexOf(stacks, stackB);
+            SwapStackIndices(indexA, indexB);
+        }
+
         private IEnumerator SwapIndices(int indexA, int indexB)
         {
             transform.GetChild(indexA).SetSiblingIndex(indexB);
