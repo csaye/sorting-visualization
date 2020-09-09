@@ -16,7 +16,7 @@ namespace SortingVisualization
             for (int i = 0; i < stackCount; i++)
             {
                 yield return new WaitForSeconds(sortDelay);
-                int smallest = stackCount;
+                int smallest = int.MaxValue;
                 for (int j = i; j < stackCount; j++)
                 {
                     if (sortingStacks.stacks[j] < smallest) smallest = sortingStacks.stacks[j];
