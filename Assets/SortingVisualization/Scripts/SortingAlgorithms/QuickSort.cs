@@ -14,6 +14,7 @@ namespace SortingVisualization
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
             sortingStacks = _sortingStacks;
+            int[] stacks = sortingStacks.stacks;
             int partitionSize = stackCount;
             while (!sortingStacks.StacksSorted() && partitionSize > 1)
             {
@@ -22,15 +23,15 @@ namespace SortingVisualization
                     int endIndex = startIndex + partitionSize;
                     if (endIndex > stackCount) endIndex = stackCount;
                     int midIndex = (startIndex + endIndex) / 2;
-                    int pivot = GetPivotStack(sortingStacks.stacks, startIndex, endIndex);
+                    int pivot = GetPivotStack(stacks, startIndex, endIndex);
                     sortingStacks.SetStack(pivot, midIndex);
                     for (int i = startIndex; i < midIndex; i++)
                     {
-                        if (sortingStacks.stacks[i] > pivot)
+                        if (stacks[i] > pivot)
                         {
                             for (int j = midIndex + 1; j < endIndex; j++)
                             {
-                                if (pivot < sortingStacks.stacks[j]) continue;
+                                if (pivot < stacks[j]) continue;
                                 sortingStacks.SwapStackIndices(i, j);
                                 yield return new WaitForSeconds(sortDelay);
                                 break;
