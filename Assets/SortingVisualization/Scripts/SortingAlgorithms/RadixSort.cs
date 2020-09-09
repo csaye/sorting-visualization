@@ -33,7 +33,7 @@ namespace SortingVisualization
                     }
                     if (index != i)
                     {
-                        sortingStacks.SwapStackIndices(i, index);
+                        sortingStacks.SetStack(stacks[index], i);
                         yield return new WaitForSeconds(sortDelay);
                     }
                 }

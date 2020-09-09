@@ -20,7 +20,7 @@ namespace SortingVisualization
 
         public const int stackCount = 64;
 
-        public const float sortDelay = 8 / (float)64;
+        public const float sortDelay = 4 / (float)64;
 
         private Vector3 pointerPosition;
 
