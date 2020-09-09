@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SortingVisualization
@@ -18,74 +19,43 @@ namespace SortingVisualization
         private static int stackCount = SortingStacks.stackCount;
         // private static float sortDelay = SortingStacks.sortDelay;
 
-        private static Node[] heap = new Node[stackCount];
+        private static List<Node> heap = new List<Node>();
 
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
             sortingStacks = _sortingStacks;
-            heap = GetInitialHeap();
-            LogHeap();
+            InitializeHeap();
             yield return null;
             sortingStacks.StopSort();
         }
 
-        private static void LogHeap()
+        private static void InitializeHeap()
         {
-            foreach (Node n in heap)
-            {
-                if (n == null) { Debug.Log("null node"); continue;}
-                Debug.Log(n.stack);
-                if (n.childA == null) Debug.Log("null child a");
-                    else Debug.Log(n.childA.stack);
-                if (n.childB == null) Debug.Log("null child b");
-                    else Debug.Log(n.childB.stack);
-                Debug.Log("--------------------------------------------------");
-            }
-        }
-
-        private static Node[] GetInitialHeap()
-        {
-            Node[] initialHeap = new Node[stackCount];
             for (int i = 0; i < stackCount; i++)
             {
                 int stackToAdd = sortingStacks.stacks[i];
                 Node nodeToAdd = new Node(stackToAdd);
                 for (int j = 0; j < stackCount; j++)
                 {
-                    if (initialHeap[j] == null)
+                    if (heap.Count <= j)
                     {
-                        initialHeap[j] = nodeToAdd;
+                        heap.Add(nodeToAdd);
                         break;
                     }
-                    if (initialHeap[j].childA == null)
+                    if (heap[j].childA == null)
                     {
-                        initialHeap[j].childA = nodeToAdd;
-                        for (int k = j; k < stackCount; k++)
-                        {
-                            if (initialHeap[k] == null)
-                            {
-                                initialHeap[k] = nodeToAdd;
-                                break;
-                            }
-                        }
+                        heap[j].childA = nodeToAdd;
+                        heap.Add(nodeToAdd);
                         break;
                     }
-                    if (initialHeap[j].childB == null)
+                    if (heap[j].childB == null)
                     {
-                        initialHeap[j].childB = nodeToAdd;
-                        for (int k = j; k < stackCount; k++)
-                        {
-                            if (initialHeap[k] == null)
-                            {
-                                initialHeap[k] = nodeToAdd;
-                                break;
-                            }
-                        }
+                        heap[j].childB = nodeToAdd;
+                        heap.Add(nodeToAdd);
                         break;
                     }
                 }
             }
-            return initialHeap;
         }
     }
 }
