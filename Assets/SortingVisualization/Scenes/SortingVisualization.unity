@@ -3078,6 +3078,7 @@ GameObject:
   m_Component:
   - component: {fileID: 692848167}
   - component: {fileID: 692848168}
+  - component: {fileID: 692848169}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -3108,9 +3109,10 @@ AudioSource:
   m_GameObject: {fileID: 692848166}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 61bbfe31b2cd54063926191cdaafccdd,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: d2b2a8abf47c840069d4ab7b11b647ce, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -3195,6 +3197,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &692848169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692848166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4daa7e28426a243fda494c602f8f90b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundMixer: {fileID: 24100000, guid: 61bbfe31b2cd54063926191cdaafccdd, type: 2}
 --- !u!1 &716419714
 GameObject:
   m_ObjectHideFlags: 0
@@ -3937,7 +3952,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Stacks
+  m_text: Size
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fae16244c868a4d18b41588a1c016a9e, type: 2}
   m_sharedMaterial: {fileID: -3772425856094640936, guid: fae16244c868a4d18b41588a1c016a9e,
@@ -4567,7 +4582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4849,7 +4864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -8163,6 +8178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f8238372986742cb93355b04dd7b779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundManager: {fileID: 692848169}
 --- !u!114 &1587437756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8207,14 +8223,14 @@ MonoBehaviour:
   m_HandleRect: {fileID: 457415717}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1587437755}
-        m_MethodName: 
+        m_MethodName: UpdateVolume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9674,7 +9690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:

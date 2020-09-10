@@ -1,18 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
-public class VolumeSlider : MonoBehaviour
+namespace SortingVisualization
 {
-    // Start is called before the first frame update
-    void Start()
+    [RequireComponent(typeof(Slider))]
+    public class VolumeSlider : MonoBehaviour
     {
-        
-    }
+        [Header("References")]
+        [SerializeField] private SoundManager soundManager = null;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private Slider slider;
+
+        private void Start()
+        {
+            slider = GetComponent<Slider>();
+        }
+
+        public void UpdateVolume()
+        {
+            float volume = -(1000 / (slider.value + 10)) + 20;
+            soundManager.SetVolume(volume);
+        }
     }
 }

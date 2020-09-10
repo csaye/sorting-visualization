@@ -34,7 +34,6 @@ namespace SortingVisualization
             if (!StacksSorted()) ResetStacks();
             stackCount = count;
             for (int i = 0; i < 64; i++) stackTransforms[i].gameObject.SetActive(i < count);
-            // ResetPointer();
         }
 
         public void SetDelay(float _delay)
@@ -56,7 +55,6 @@ namespace SortingVisualization
         {
             StopSort();
             for (int i = 0; i < stackCount; i++) SetStack(i, i);
-            // ResetPointer();
         }
 
         public void RandomizeStacks()
@@ -64,14 +62,12 @@ namespace SortingVisualization
             StopSort();
             int[] randomIndices = GetRandomIndices(stackCount);
             for (int i = 0; i < stackCount; i++) SetStack(randomIndices[i], i);
-            // ResetPointer();
         }
 
         public void WorstCaseStacks()
         {
             StopSort();
             for (int i = 0; i < stackCount; i++) SetStack((stackCount - 1) - i, i);
-            // ResetPointer();
         }
 
         private void Update()

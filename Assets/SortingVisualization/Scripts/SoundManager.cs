@@ -1,18 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Audio;
 
-public class SoundManager : MonoBehaviour
+namespace SortingVisualization
 {
-    // Start is called before the first frame update
-    void Start()
+    [RequireComponent(typeof(AudioSource))]
+    public class SoundManager : MonoBehaviour
     {
-        
-    }
+        [Header("References")]
+        [SerializeField] private AudioMixer soundMixer = null;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private AudioSource audioSource;
+
+        private void Start()
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown("space")) PlaySound(0);
+        }
+
+        public void PlaySound(int pitch)
+        {
+            audioSource.pitch = 1 + ((float)pitch / 64);
+            audioSource.Play();
+        }
+
+        public void SetVolume(float volume)
+        {
+            soundMixer.SetFloat("Volume", volume);
+        }
     }
 }
