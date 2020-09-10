@@ -18,7 +18,7 @@ namespace SortingVisualization
 
         public void UpdateDelay()
         {
-            sortingStacks.SetDelay(slider.value);
+            sortingStacks.SetDelay(0.125f - slider.value);
         }
     }
 }
