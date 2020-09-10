@@ -23,12 +23,7 @@ namespace SortingVisualization
 
         public float delay {get; private set;} = 0.0625f;
 
-        private Vector3 pointerPosition;
-
-        private void Start()
-        {
-            pointerPosition = pointerTransform.position;
-        }
+        private Vector3 pointerPosition = new Vector3(-5.4514f, -2.8819f, 90);
 
         public void SetStackCount(int count)
         {
@@ -73,7 +68,14 @@ namespace SortingVisualization
 
         private void Update()
         {
-            if (!sorting) ResetPointer();
+            if (!sorting)
+            {
+                ResetPointer();
+            }
+            else
+            {
+                if (StacksSorted()) StopSort();
+            }
         }
 
         private void ResetPointer()

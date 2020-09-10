@@ -16,11 +16,14 @@ namespace SortingVisualization
             int partitionSize = stackCount;
             while (!sortingStacks.StacksSorted() && partitionSize > 1)
             {
+                Debug.Log(partitionSize);
                 for (int startIndex = 0; startIndex < stackCount; startIndex += partitionSize)
                 {
                     int endIndex = startIndex + partitionSize;
-                    if (endIndex > stackCount) endIndex = stackCount;
+                    if (endIndex > stackCount) continue;
+                    if (endIndex + partitionSize > stackCount) endIndex = stackCount;
                     int midIndex = (startIndex + endIndex) / 2;
+                    Debug.Log(startIndex + " " + midIndex + " " + endIndex);
                     int pivot = GetPivotStack(stacks, startIndex, endIndex);
                     sortingStacks.SetStack(pivot, midIndex);
                     for (int i = startIndex; i < midIndex; i++)
@@ -35,11 +38,21 @@ namespace SortingVisualization
                                 break;
                             }
                         }
-
                     }
                 }
                 partitionSize /= 2;
             }
+            // if (!sortingStacks.StacksSorted())
+            // {
+            //     for (int i = 0; i < stackCount - 1; i++)
+            //     {
+            //         if (stacks[i] > stacks[i + 1])
+            //         {
+            //             sortingStacks.SwapStackIndices(i, i + 1);
+            //             yield return new WaitForSeconds(sortingStacks.delay);
+            //         }
+            //     }
+            // }
             sortingStacks.StopSort();
         }
 
