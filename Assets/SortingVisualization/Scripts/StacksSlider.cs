@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace SortingVisualization
 {
     [RequireComponent(typeof(Slider))]
-    public class DelaySlider : MonoBehaviour
+    public class StacksSlider : MonoBehaviour
     {
         [Header("References")]
         [SerializeField] private SortingStacks sortingStacks = null;
@@ -16,9 +16,14 @@ namespace SortingVisualization
             slider = GetComponent<Slider>();
         }
 
-        public void UpdateDelay()
+        public void UpdateStacks()
         {
-            sortingStacks.SetDelay(slider.value);
+            sortingStacks.SetStackCount(Mathf.RoundToInt(slider.value));
+        }
+
+        private void Update()
+        {
+            slider.interactable = !sortingStacks.sorting;
         }
     }
 }

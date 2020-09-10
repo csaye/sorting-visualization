@@ -7,11 +7,10 @@ namespace SortingVisualization
     {
         private static SortingStacks sortingStacks;
 
-        private static int stackCount = SortingStacks.stackCount;
-
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
             sortingStacks = _sortingStacks;
+            int stackCount = sortingStacks.stackCount;
             int[] stacks = sortingStacks.stacks;
             for (int i = (stackCount / 2) - 1; i >= 0; i--)
             {

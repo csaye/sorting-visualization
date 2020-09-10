@@ -8,8 +8,8 @@ namespace SortingVisualization
     public class SortingStacks : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private Transform[] stackTransforms = new Transform[stackCount];
-        [SerializeField] public int[] stacks = new int[stackCount];
+        [SerializeField] private Transform[] stackTransforms = new Transform[64];
+        [SerializeField] public int[] stacks = new int[64];
         [SerializeField] private Transform pointerTransform = null;
 
         public bool sorting {get; private set;}
@@ -18,15 +18,26 @@ namespace SortingVisualization
 
         private Coroutine sortCoroutine;
 
-        public const int stackCount = 64;
+        public int stackCount {get; private set;} = 64;
 
-        public float delay {get; set;} = 0.0625f;
+        public float delay {get; private set;} = 0.0625f;
 
         private Vector3 pointerPosition;
 
         private void Start()
         {
             pointerPosition = pointerTransform.position;
+        }
+
+        public void SetStackCount(int count)
+        {
+            stackCount = count;
+            for (int i = 0; i < 64; i++) stackTransforms[i].gameObject.SetActive(i < count);
+        }
+
+        public void SetDelay(float _delay)
+        {
+            delay = _delay;
         }
 
         public void TriggerSorting()

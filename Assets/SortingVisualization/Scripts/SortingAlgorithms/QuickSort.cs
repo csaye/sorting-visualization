@@ -8,11 +8,10 @@ namespace SortingVisualization
     {
         private static SortingStacks sortingStacks;
 
-        private static int stackCount = SortingStacks.stackCount;
-
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
             sortingStacks = _sortingStacks;
+            int stackCount = sortingStacks.stackCount;
             int[] stacks = sortingStacks.stacks;
             int partitionSize = stackCount;
             while (!sortingStacks.StacksSorted() && partitionSize > 1)
