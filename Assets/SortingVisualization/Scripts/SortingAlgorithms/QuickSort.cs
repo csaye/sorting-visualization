@@ -16,14 +16,12 @@ namespace SortingVisualization
             int partitionSize = stackCount;
             while (!sortingStacks.StacksSorted() && partitionSize > 1)
             {
-                Debug.Log(partitionSize);
                 for (int startIndex = 0; startIndex < stackCount; startIndex += partitionSize)
                 {
                     int endIndex = startIndex + partitionSize;
                     if (endIndex > stackCount) continue;
                     if (endIndex + partitionSize > stackCount) endIndex = stackCount;
                     int midIndex = (startIndex + endIndex) / 2;
-                    Debug.Log(startIndex + " " + midIndex + " " + endIndex);
                     int pivot = GetPivotStack(stacks, startIndex, endIndex);
                     sortingStacks.SetStack(pivot, midIndex);
                     for (int i = startIndex; i < midIndex; i++)
@@ -42,17 +40,24 @@ namespace SortingVisualization
                 }
                 partitionSize /= 2;
             }
-            // if (!sortingStacks.StacksSorted())
-            // {
-            //     for (int i = 0; i < stackCount - 1; i++)
-            //     {
-            //         if (stacks[i] > stacks[i + 1])
-            //         {
-            //             sortingStacks.SwapStackIndices(i, i + 1);
-            //             yield return new WaitForSeconds(sortingStacks.delay);
-            //         }
-            //     }
-            // }
+            while (!sortingStacks.StacksSorted())
+            {
+                for (int i = 0; i < stackCount - 1; i++)
+                {
+                    int j = i + 1;
+                    if (stacks[i] <= stacks[j]) continue;
+                    if (j == stackCount - 1)
+                    {
+                        sortingStacks.SetStack(stacks[i], j);
+                        yield return new WaitForSeconds(sortingStacks.delay);
+                        continue;
+                    }
+                    while (stacks[i] > stacks[j]) j++;
+                    j--;
+                    sortingStacks.SetStack(stacks[i], j);
+                    yield return new WaitForSeconds(sortingStacks.delay);
+                }
+            }
             sortingStacks.StopSort();
         }
 
