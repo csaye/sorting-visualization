@@ -8,7 +8,6 @@ namespace SortingVisualization
         private static SortingStacks sortingStacks;
 
         private static int stackCount = SortingStacks.stackCount;
-        private static float sortDelay = SortingStacks.sortDelay;
 
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
@@ -19,7 +18,7 @@ namespace SortingVisualization
                 {
                     if (sortingStacks.stacks[i] < sortingStacks.stacks[i - 1])
                     {
-                        yield return new WaitForSeconds(sortDelay);
+                        yield return new WaitForSeconds(sortingStacks.delay);
                         sortingStacks.SetStack(sortingStacks.stacks[i], i - 1);
                     }
                 }

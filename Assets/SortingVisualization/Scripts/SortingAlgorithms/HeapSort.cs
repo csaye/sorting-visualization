@@ -8,7 +8,6 @@ namespace SortingVisualization
         private static SortingStacks sortingStacks;
 
         private static int stackCount = SortingStacks.stackCount;
-        private static float sortDelay = SortingStacks.sortDelay;
 
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
@@ -28,7 +27,7 @@ namespace SortingVisualization
                     if (largest != index)
                     {
                         sortingStacks.SwapStackIndices(index, largest);
-                        yield return new WaitForSeconds(sortDelay);
+                        yield return new WaitForSeconds(sortingStacks.delay);
                         index = largest;
                     }
                     else sorting = false;
@@ -37,7 +36,7 @@ namespace SortingVisualization
             for (int i = stackCount - 1; i > 0; i--)
             {
                 sortingStacks.SwapStackIndices(0, i);
-                yield return new WaitForSeconds(sortDelay);
+                yield return new WaitForSeconds(sortingStacks.delay);
                 bool sorting = true;
                 int index = 0;
                 while (sorting)
@@ -50,7 +49,7 @@ namespace SortingVisualization
                     if (largest != index)
                     {
                         sortingStacks.SwapStackIndices(index, largest);
-                        yield return new WaitForSeconds(sortDelay);
+                        yield return new WaitForSeconds(sortingStacks.delay);
                         index = largest;
                     }
                     else sorting = false;

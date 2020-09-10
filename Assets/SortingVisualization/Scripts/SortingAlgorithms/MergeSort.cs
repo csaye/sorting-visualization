@@ -8,7 +8,6 @@ namespace SortingVisualization
         private static SortingStacks sortingStacks;
 
         private static int stackCount = SortingStacks.stackCount;
-        private static float sortDelay = SortingStacks.sortDelay;
 
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
@@ -23,7 +22,7 @@ namespace SortingVisualization
                 if (stacks[i] > stacks[i + 1])
                 {
                     sortingStacks.SwapStackIndices(i, i + 1);
-                    yield return new WaitForSeconds(sortDelay);
+                    yield return new WaitForSeconds(sortingStacks.delay);
                 }
             }
             groupSize *= 2;
@@ -42,7 +41,7 @@ namespace SortingVisualization
                         if (stacks[j] != smallest)
                         {
                             sortingStacks.SetStack(smallest, j);
-                            yield return new WaitForSeconds(sortDelay);
+                            yield return new WaitForSeconds(sortingStacks.delay);
                         }
                     }
                     groupCount--;

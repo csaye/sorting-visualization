@@ -8,14 +8,13 @@ namespace SortingVisualization
         private static SortingStacks sortingStacks;
 
         private static int stackCount = SortingStacks.stackCount;
-        private static float sortDelay = SortingStacks.sortDelay;
 
         public static IEnumerator Sort(SortingStacks _sortingStacks)
         {
             sortingStacks = _sortingStacks;
             for (int i = 0; i < stackCount; i++)
             {
-                yield return new WaitForSeconds(sortDelay);
+                yield return new WaitForSeconds(sortingStacks.delay);
                 int index = i;
                 for (int j = i; j > 0; j--)
                 {
