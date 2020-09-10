@@ -16,11 +16,6 @@ namespace SortingVisualization
             audioSource = GetComponent<AudioSource>();
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown("space")) PlaySound(0);
-        }
-
         public void PlaySound(int pitch)
         {
             audioSource.pitch = 1 + ((float)pitch / 64);

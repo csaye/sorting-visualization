@@ -11,6 +11,7 @@ namespace SortingVisualization
         [SerializeField] private Transform[] stackTransforms = new Transform[64];
         [SerializeField] public int[] stacks = new int[64];
         [SerializeField] private Transform pointerTransform = null;
+        [SerializeField] private SoundManager soundManager = null;
 
         public bool sorting {get; private set;}
 
@@ -134,6 +135,7 @@ namespace SortingVisualization
             }
             stackTransforms[stack].SetSiblingIndex(index);
             pointerTransform.position = new Vector3(stackTransforms[stack].position.x, pointerPosition.y, pointerPosition.z);
+            soundManager.PlaySound(stack);
         }
 
         public void SwapStackIndices(int indexA, int indexB)
@@ -155,6 +157,7 @@ namespace SortingVisualization
                 updatedTransform = transform.GetChild(indexB);
             }
             pointerTransform.position = new Vector3(updatedTransform.position.x, pointerPosition.y, pointerPosition.z);
+            soundManager.PlaySound(stacks[indexB]);
         }
 
         public void SwapStacks(int stackA, int stackB)
@@ -162,13 +165,6 @@ namespace SortingVisualization
             int indexA = Array.IndexOf(stacks, stackA);
             int indexB = Array.IndexOf(stacks, stackB);
             SwapStackIndices(indexA, indexB);
-        }
-
-        private IEnumerator SwapIndices(int indexA, int indexB)
-        {
-            transform.GetChild(indexA).SetSiblingIndex(indexB);
-            yield return new WaitForSeconds(0.1f);
-            transform.GetChild(indexB - 1).SetSiblingIndex(indexA);
         }
 
         private int[] GetRandomIndices(int size)
