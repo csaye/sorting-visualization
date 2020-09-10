@@ -32,7 +32,8 @@ namespace SortingVisualization
                     if (i + (groupSize / 2) >= stackCount) break;
                     for (int j = i; j < i + groupSize; j++)
                     {
-                        int smallest = stackCount;
+                        if (j >= stackCount) break;
+                        int smallest = int.MaxValue;
                         for (int k = j; k < i + groupSize; k++)
                         {
                             if (stacks[k] < smallest) smallest = stacks[k];
